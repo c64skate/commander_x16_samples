@@ -34,6 +34,10 @@
 	BasicUpstart(CodeStart)
 
 	* = CodeStart "Code"
+	// disable mouse
+	lda #$00
+	jsr $ff09
+
 	// set VERA control bits to select data port #0 (already default value)
 	lda #%00000000
 	sta $9f25
@@ -62,6 +66,13 @@ pal:	lda BitmapPalette,x
 	bne pal
 
 	// init screen
+
+	// layer 1 configuration
+	lda #$30
+	sta $9f21
+	stz $9f20	// CTRL0
+	lda #%00000000	// disable layer 1
+	sta $9f23
 
 	// layer 0 configuration
 	lda #$20
